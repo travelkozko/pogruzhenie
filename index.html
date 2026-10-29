@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
 <title>Погружение</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -144,7 +146,11 @@ function insets(){
 if(tg){ try{ tg.ready(); tg.expand(); tg.requestFullscreen && tg.requestFullscreen(); tg.disableVerticalSwipes && tg.disableVerticalSwipes();
   tg.setHeaderColor && tg.setHeaderColor('#03172b'); tg.setBackgroundColor && tg.setBackgroundColor('#03172b');
   ['safeAreaChanged','contentSafeAreaChanged','viewportChanged','fullscreenChanged'].forEach(e=>tg.onEvent(e,layout)); }catch(e){} }
-const haptic=(t)=>{ try{ tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred(t);}catch(e){} };
+const VIB={light:22,medium:40,heavy:60};
+const haptic=(t)=>{
+  try{ tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred(t);}catch(e){}
+  try{ navigator.vibrate && navigator.vibrate(VIB[t]||15); }catch(e){} // direct vibration: works even when system haptics are off
+};
 
 /* ---------- mask (glass) ---------- */
 let glass={x:0,y:0,b:0};
@@ -349,6 +355,24 @@ window.addEventListener('resize',layout);
 layout(); initGL();
 vid.play().catch(()=>{ app.addEventListener('pointerdown',()=>vid.play(),{once:true}); });
 requestAnimationFrame(tick);
+
+/* ---------- auto-update: check version.txt every minute, reload only on the surface ---------- */
+const BUILD='20261029-1332';
+let pendingVer=null;
+async function checkVer(){
+  try{
+    const r=await fetch('version.txt?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok) return;
+    const v=(await r.text()).trim();
+    if(v && v!==BUILD) pendingVer=v;
+  }catch(e){}
+}
+function tryReload(){
+  if(pendingVer && state.mode==='surface'){
+    location.replace(location.pathname+'?v='+encodeURIComponent(pendingVer)+location.hash); // hash keeps Telegram launch data
+  }
+}
+setTimeout(checkVer,2000); setInterval(checkVer,60000); setInterval(tryReload,1000);
 })();
 </script>
 </body>
