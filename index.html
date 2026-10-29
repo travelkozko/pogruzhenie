@@ -68,20 +68,14 @@ html,body{height:100%;background:var(--deep);overflow:hidden;color:var(--ink);fo
 
 /* after dive placeholder */
 #vid2{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.02)}
-#next{position:absolute;left:58px;right:58px;top:41%;transform:translateY(-44%);text-align:center;opacity:0;pointer-events:none;transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1);
-  padding:20px 18px 16px;border-radius:22px;background:rgba(3,28,52,.34);border:1px solid rgba(143,244,255,.22);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 20px 50px rgba(0,15,35,.35)}
-#next.on{opacity:1;transform:translateY(-50%);pointer-events:auto}
-#next .d{font-family:'Share Tech Mono',monospace;color:var(--hud);font-size:11px;letter-spacing:.24em}
-#next h2{font-family:Unbounded,sans-serif;font-weight:300;font-size:21px;letter-spacing:.04em;margin:10px 0 8px;color:#fff}
-#next p{font-size:12.5px;color:rgba(234,252,255,.78);line-height:1.5}
-#next .facts{list-style:none;display:flex;justify-content:space-between;margin:16px 0 14px;padding:12px 0;border-top:1px solid rgba(143,244,255,.16);border-bottom:1px solid rgba(143,244,255,.16)}
-#next .facts li{flex:1}
-#next .facts b{display:block;font:18px 'Share Tech Mono',monospace;color:var(--hud)}
-#next .facts i{font-style:normal;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--hud-dim)}
-#next .book{width:100%;border:0;border-radius:30px;padding:13px;background:#eafcff;color:#03243f;font:600 13px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase}
-#next .book.done{background:rgba(143,244,255,.18);color:var(--hud)}
-#next #up{margin-top:10px;background:none;border:0;color:var(--hud-dim);font:11px 'Share Tech Mono',monospace;letter-spacing:.2em;padding:6px 12px}
+#next{position:absolute;left:calc(var(--gx) + 112px);right:calc(var(--gx) + 104px);top:calc(var(--gy) + 16px);text-align:center;opacity:0;pointer-events:none;
+  padding:9px 10px 10px;border-radius:14px;background:rgba(3,28,52,.30);border:1px solid rgba(143,244,255,.20);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transform:translateY(-8px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1)}
+#next.on{opacity:1;transform:none}
+#next .d{font-family:'Share Tech Mono',monospace;color:var(--hud);font-size:10px;letter-spacing:.12em;white-space:nowrap;text-transform:uppercase}
+#next p{margin-top:5px;font-family:Unbounded,sans-serif;font-weight:300;font-size:11.5px;line-height:1.4;color:#fff;text-shadow:0 1px 8px rgba(0,20,40,.6)}
 #hint{position:absolute;left:50%;bottom:calc(var(--gb) + 70px);transform:translateX(-50%);white-space:nowrap;padding:8px 16px;border-radius:20px;background:rgba(3,28,52,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(143,244,255,.25);font:11px 'Share Tech Mono',monospace;letter-spacing:.24em;color:var(--hud);opacity:0;transition:opacity .8s;pointer-events:none;text-shadow:0 0 10px rgba(0,30,60,.8)}
+#hint small{display:block;margin-top:4px;font-size:9px;letter-spacing:.2em;color:var(--hud-dim)}
 #hint.on{opacity:1;animation:bob 2s ease-in-out infinite}
 @keyframes bob{50%{transform:translate(-50%,5px)}}
 
@@ -104,14 +98,10 @@ body.diving #cta{opacity:0}
   <div id="cta"><div class="ring"><i></i></div><span>Коснись, чтобы нырнуть</span></div>
 
   <div id="next">
-    <div class="d">05 М · ПЕРВЫЙ РИФ</div>
-    <h2>Пробный дайв</h2>
-    <p>Без опыта и сертификата. Инструктор держит тебя всё погружение, снаряжение наше.</p>
-    <ul class="facts"><li><b>40′</b><i>в воде</i></li><li><b>10+</b><i>возраст</i></li><li><b>$65</b><i>с фото</i></li></ul>
-    <button class="book" id="book">Записаться</button>
-    <button id="up">↑ ВСПЛЫТЬ</button>
+    <div class="d">Пробный дайв</div>
+    <p>Мир становится тише, а&nbsp;краски — ярче</p>
   </div>
-  <div id="hint">↓ ГЛУБЖЕ · 12 М</div>
+  <div id="hint">↓ ГЛУБЖЕ · 12 М<small>↑ свайп вверх — всплыть</small></div>
 
   <div id="shade"></div>
   <svg id="mask"></svg>
@@ -298,9 +288,13 @@ function surface(){
   state.mode='rising'; state.riseAt=performance.now(); haptic('light');
   document.getElementById('next').classList.remove('on'); document.getElementById('hint').classList.remove('on');
 }
-document.getElementById('book').addEventListener('click',e=>{e.stopPropagation(); const b=e.currentTarget; haptic('medium'); try{tg&&tg.HapticFeedback&&tg.HapticFeedback.notificationOccurred('success')}catch(_){}
-  b.textContent='Заявка принята · демо'; b.classList.add('done');});
-document.getElementById('up').addEventListener('click',e=>{e.stopPropagation(); surface();});
+// swipes: up = surface, down = deeper (next scene in progress)
+let sy=null;
+app.addEventListener('pointerdown',e=>{sy=e.clientY;},true);
+app.addEventListener('pointerup',e=>{ if(sy===null||state.mode!=='down') return; const dy=e.clientY-sy; sy=null;
+  if(dy<-60) surface();
+  else if(dy>60){ const hn=document.getElementById('hint'); haptic('light'); hn.animate([{transform:'translate(-50%,0)'},{transform:'translate(-50%,10px)'},{transform:'translate(-50%,0)'}],{duration:400}); }
+},true);
 app.addEventListener('pointerdown',e=>{ if(e.target.closest('button')) return; dive(e.clientX,e.clientY); });
 
 const ease=t=>t<0?0:t>1?1:t*t*(3-2*t);
