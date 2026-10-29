@@ -392,7 +392,7 @@ function tick(now){
     const mtr=Math.floor(dd); if(mtr!==lastMeter){ lastMeter=mtr; haptic('light'); }
     setAir(m.air-ease(P)*(b>a?3:1));
     if(P<.55&&Math.random()<.35) spawn(1,W*(.3+Math.random()*.4),H*.85,40);
-    if(P>=1){ state.mode='down'; state.cur=m.to; state.dk=0; state.mx=0; slotA=slotB; SCENES.forEach(s=>{ if(s.v!==slotA&&s.v!==vid) s.v.pause(); if(s.hold) s.hold.pause(); }); if(!SCENES[m.to].once) showUI(m.to); }
+    if(P>=1){ state.mode='down'; state.cur=m.to; state.dk=0; state.mx=0; slotA=slotB; SCENES.forEach(s=>{ if(s.v!==slotA&&s.v!==vid) s.v.pause(); if(s.hold) s.hold.pause(); }); showUI(m.to); }
   } else if(state.mode==='rising'){
     const R=(now-state.riseAt)/1000, k=1-ease(R/1.4);
     state.sub=Math.min(state.sub,k); state.mx=Math.min(state.mx,1-ease(R/.8)); setDepth(Math.min(parseFloat(dv.textContent),state.riseFrom*k));
@@ -405,7 +405,7 @@ function tick(now){
   // one-shot scene (manta): play the clip once, UI stays hidden; at the end switch to a seamless hover loop and bring the UI back
   const cs=SCENES[state.cur];
   if(state.mode==='down' && cs.once && slotA===cs.v && (cs.v.ended || (cs.v.duration && cs.v.currentTime>=cs.v.duration-.05))){
-    cs.hold.currentTime=0; cs.hold.play().catch(()=>{}); slotA=cs.hold; showUI(state.cur);
+    cs.hold.currentTime=(cs.hold.duration||9)/2; cs.hold.play().catch(()=>{}); slotA=cs.hold;
   }
   if(live&&live.paused&&!live.ended&&now-(state.kick||0)>500){ state.kick=now; live.play().catch(()=>{}); }
   // "hands off" warning on the turtle scene, synced to the hand in the video
@@ -452,7 +452,7 @@ vid.play().catch(()=>{ app.addEventListener('pointerdown',()=>vid.play(),{once:t
 requestAnimationFrame(tick);
 
 /* ---------- auto-update: check version.txt every minute, reload only on the surface ---------- */
-const BUILD='20261029-1605';
+const BUILD='20261029-1620';
 let pendingVer=null;
 async function checkVer(){
   try{
