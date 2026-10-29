@@ -91,6 +91,60 @@ html,body{height:100%;background:var(--deep);overflow:hidden;color:var(--ink);fo
 @keyframes blink{50%{border-color:rgba(255,207,90,.25)}}
 body.diving #title{opacity:0;transform:translateY(-50%) scale(1.25);filter:blur(6px)}
 body.diving #cta{opacity:0}
+
+/* ---------- ascent button + finale ---------- */
+#hint.go{border-color:rgba(143,244,255,.7);background:rgba(3,40,66,.6);box-shadow:0 0 22px rgba(143,244,255,.35);color:#fff}
+body.fin #mask,body.fin #shade,body.fin .hud,body.fin #scale,body.fin #next,body.fin #hint,body.fin #warn,body.fin #demo{opacity:0!important;transition:opacity 1s}
+#fin{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 1.2s ease;z-index:20;background:#04253a}
+body.fin #fin{opacity:1;pointer-events:auto}
+#fin .bg{position:absolute;inset:0;background:url('img/finale.jpg') center/cover no-repeat;transform:scale(1.12);transition:transform 6s cubic-bezier(.2,.7,.2,1)}
+body.fin #fin .bg{transform:scale(1)}
+#fin .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,0) 30%,rgba(2,24,40,.55) 60%,rgba(2,18,32,.9))}
+#fin .sc{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:calc(var(--top) + 36vh) 16px calc(var(--bot) + 28px)}
+#fin .card{max-width:440px;margin:0 auto 14px;padding:18px 18px 20px;border-radius:20px;background:rgba(3,26,46,.72);border:1px solid rgba(143,244,255,.22);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 18px 50px rgba(0,10,25,.35);
+  opacity:0;transform:translateY(40px);transition:opacity .8s,transform .9s cubic-bezier(.2,.7,.2,1)}
+body.fin #fin .card{opacity:1;transform:none}
+body.fin #fin .card.c1{transition-delay:.7s} body.fin #fin .card.c2{transition-delay:1s}
+#fin .k{font:10px 'Share Tech Mono',monospace;letter-spacing:.2em;color:var(--hud-dim);text-transform:uppercase}
+#fin .hd{display:flex;justify-content:space-between;align-items:baseline}
+#fin h2{margin:6px 0 14px;font:300 20px/1.25 Unbounded,sans-serif;color:#fff;letter-spacing:.02em}
+#fin .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#fin .st{padding:10px 12px;border-radius:12px;background:rgba(143,244,255,.06);border:1px solid rgba(143,244,255,.12)}
+#fin .st b{display:block;font:400 22px/1.1 'Share Tech Mono',monospace;color:var(--hud);text-shadow:0 0 10px rgba(143,244,255,.35)}
+#fin .st b small{font-size:12px;color:var(--hud-dim);margin-left:2px}
+#fin .seen{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+#fin .seen span{font:600 11px Manrope,sans-serif;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#eafcff}
+#fin .lbl2{margin:16px 0 8px}
+#fin .progs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#fin .pg{text-align:left;padding:10px 11px;border-radius:12px;border:1px solid rgba(143,244,255,.16);background:rgba(255,255,255,.04);color:#eafcff;font:inherit;cursor:pointer;transition:background .2s,border-color .2s}
+#fin .pg b{display:block;font:600 13px Manrope,sans-serif}
+#fin .pg i{display:block;font:normal 10px 'Share Tech Mono',monospace;color:var(--hud-dim);margin-top:3px;letter-spacing:.08em}
+#fin .pg em{display:block;font:normal 14px 'Share Tech Mono',monospace;color:#fff;margin-top:6px}
+#fin .pg.on,#fin .day.on{border-color:var(--hud);background:rgba(143,244,255,.16);box-shadow:0 0 16px rgba(143,244,255,.18)}
+#fin .days{display:flex;gap:6px;overflow-x:auto;touch-action:pan-x;padding-bottom:4px;scrollbar-width:none}
+#fin .days::-webkit-scrollbar{display:none}
+#fin .day{flex:0 0 auto;width:52px;padding:8px 0;border-radius:12px;border:1px solid rgba(143,244,255,.16);background:rgba(255,255,255,.04);color:#eafcff;font:inherit;text-align:center;cursor:pointer}
+#fin .day i{display:block;font:normal 10px Manrope,sans-serif;color:var(--hud-dim);text-transform:uppercase;letter-spacing:.1em}
+#fin .day b{display:block;font:400 18px 'Share Tech Mono',monospace;margin-top:2px}
+#fin .row{display:flex;gap:10px;align-items:stretch}
+#fin .step{display:flex;align-items:center;border-radius:12px;border:1px solid rgba(143,244,255,.16);background:rgba(255,255,255,.04)}
+#fin .step button{width:38px;height:44px;border:0;background:none;color:var(--hud);font:20px 'Share Tech Mono',monospace;cursor:pointer}
+#fin .step span{min-width:22px;text-align:center;font:18px 'Share Tech Mono',monospace;color:#fff}
+#fin input{flex:1;min-width:0;height:46px;padding:0 12px;border-radius:12px;border:1px solid rgba(143,244,255,.16);background:rgba(255,255,255,.06);color:#fff;font:15px Manrope,sans-serif;outline:none;user-select:text;-webkit-user-select:text}
+#fin input:focus{border-color:var(--hud)}
+#fin input::placeholder{color:rgba(234,252,255,.4)}
+#fin .send{display:block;width:100%;margin-top:16px;height:52px;border:0;border-radius:14px;background:linear-gradient(90deg,#5fe3f2,#8ff4ff);color:#03223a;font:500 13px Unbounded,sans-serif;letter-spacing:.08em;cursor:pointer;box-shadow:0 8px 30px rgba(143,244,255,.3)}
+#fin .send:active,#fin .again:active{transform:scale(.98)}
+#fin .note{margin-top:9px;text-align:center;font:11px Manrope,sans-serif;color:rgba(234,252,255,.55)}
+#fin .again{display:block;max-width:440px;width:100%;margin:4px auto 0;height:48px;border-radius:14px;border:1px solid rgba(143,244,255,.4);background:rgba(3,26,46,.5);color:var(--hud);font:12px 'Share Tech Mono',monospace;letter-spacing:.2em;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#fin .foot{margin-top:14px;text-align:center;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(234,252,255,.4)}
+#fin .done{display:none;text-align:center;padding:8px 0 4px}
+#fin .done .ok{width:56px;height:56px;margin:0 auto 12px;border-radius:50%;border:1px solid var(--hud);display:flex;align-items:center;justify-content:center;color:var(--hud);font-size:26px;box-shadow:0 0 24px rgba(143,244,255,.3)}
+#fin .done p{font:14px/1.5 Manrope,sans-serif;color:#eafcff}
+#fin .done .sum{margin:12px 0;font:12px/1.6 'Share Tech Mono',monospace;color:var(--hud)}
+#fin .done .dm{margin-top:12px;padding:10px 12px;border-radius:12px;border:1px dashed rgba(255,207,90,.6);color:#ffcf5a;font:600 12px/1.4 Manrope,sans-serif}
+#fin.sent .form{display:none} #fin.sent .done{display:block}
 </style>
 </head>
 <body>
@@ -133,6 +187,49 @@ body.diving #cta{opacity:0}
     <div class="r"><div class="v" id="tv">0:00</div><div class="lbl">время</div></div>
   </div>
   <div id="demo">демо · Kozak Studio</div>
+
+  <div id="fin">
+    <div class="bg"></div>
+    <div class="sc">
+      <div class="card c1">
+        <div class="hd"><span class="k">журнал погружения</span><span class="k" id="flog">№ 001</span></div>
+        <h2>С возвращением на&nbsp;поверхность</h2>
+        <div class="grid">
+          <div class="st"><b>30.0<small>м</small></b><span class="k">макс. глубина</span></div>
+          <div class="st"><b id="ftime">0:00</b><span class="k">под водой</span></div>
+          <div class="st"><b id="fair">0<small>bar</small></b><span class="k">ушло воздуха</span></div>
+          <div class="st"><b>27<small>°C</small></b><span class="k">вода</span></div>
+        </div>
+        <div class="lbl2 k">кого видели</div>
+        <div class="seen" id="fseen"></div>
+      </div>
+      <div class="card c2">
+        <div class="form">
+          <span class="k">бронь</span>
+          <h2>Повторим — уже по-настоящему?</h2>
+          <div class="k lbl2" style="margin-top:0">программа · цены демо</div>
+          <div class="progs" id="fprogs"></div>
+          <div class="k lbl2">дата</div>
+          <div class="days" id="fdays"></div>
+          <div class="k lbl2">сколько человек и как связаться</div>
+          <div class="row">
+            <div class="step"><button type="button" id="fminus">−</button><span id="fppl">1</span><button type="button" id="fplus">+</button></div>
+            <input id="fcontact" type="text" placeholder="@telegram" autocomplete="off">
+          </div>
+          <button type="button" class="send" id="fsend">Отправить заявку</button>
+          <div class="note">Это демо: заявка никуда не отправляется</div>
+        </div>
+        <div class="done">
+          <div class="ok">✓</div>
+          <p>Заявка принята.<br>Инструктор свяжется с&nbsp;тобой.</p>
+          <div class="sum" id="fsum"></div>
+          <div class="dm">Это демо — заявка никуда не&nbsp;отправлена</div>
+        </div>
+      </div>
+      <button type="button" class="again" id="fagain">↓ НЫРНУТЬ ЕЩЁ РАЗ</button>
+      <div class="foot">демо · Kozak Studio</div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -312,12 +409,12 @@ function drawGL(now){
 /* ---------- state & dive ---------- */
 const SCENES=[
   {v:vid, depth:0},
-  {v:vid2, depth:5,  tag:'Пробный дайв', txt:'Мир становится тише, а&nbsp;краски — ярче'},
-  {v:vid3, depth:12, tag:'Open Water',   txt:'Синева густеет. Ты — гость рифа', warn:{t:[2.15,4.7],title:'РУКАМИ НЕ ТРОГАТЬ',sub:'смотри — но не касайся',kind:'warn'}},
-  {v:vid4, depth:18, tag:'Advanced', txt:'Размах до семи метров — и&nbsp;ни капли угрозы'},
-  {v:vid5, depth:30, tag:'Deep Diver', txt:'Самая большая рыба на&nbsp;планете — и&nbsp;ест только планктон'},
+  {v:vid2, depth:5, seen:'Коралловый риф', tag:'Пробный дайв', txt:'Мир становится тише, а&nbsp;краски — ярче'},
+  {v:vid3, depth:12, seen:'Черепаха', tag:'Open Water',   txt:'Синева густеет. Ты — гость рифа', warn:{t:[2.15,4.7],title:'РУКАМИ НЕ ТРОГАТЬ',sub:'смотри — но не касайся',kind:'warn'}},
+  {v:vid4, depth:18, seen:'Манта', tag:'Advanced', txt:'Размах до семи метров — и&nbsp;ни капли угрозы'},
+  {v:vid5, depth:30, seen:'Китовая акула', tag:'Deep Diver', txt:'Самая большая рыба на&nbsp;планете — и&nbsp;ест только планктон'},
 ];
-const NEXT_LABEL={1:'КОСНИСЬ — ГЛУБЖЕ · 12 М',2:'КОСНИСЬ — ГЛУБЖЕ · 18 М',3:'КОСНИСЬ — ГЛУБЖЕ · 30 М',4:'ЖУРНАЛ ПОГРУЖЕНИЙ · СКОРО'};
+const NEXT_LABEL={1:'КОСНИСЬ — ГЛУБЖЕ · 12 М',2:'КОСНИСЬ — ГЛУБЖЕ · 18 М',3:'КОСНИСЬ — ГЛУБЖЕ · 30 М',4:'КОСНИСЬ — ВСПЛЫВАЕМ ↑'};
 // octopus turns sand-coloured (code-driven camouflage), resets before the loop seam
 function camoAmt(v){ const s=SCENES.find(x=>x.v===v); return (s&&s.camo) ? (v.currentTime||0) : -1; }
 let slotA=vid, slotB=vid2;
@@ -356,7 +453,8 @@ function hideUI(){ document.getElementById('next').classList.remove('on'); docum
 function showUI(i){
   const s=SCENES[i]; document.getElementById('ptag').innerHTML=s.tag; document.getElementById('ptxt').innerHTML=s.txt;
   document.getElementById('hnext').textContent=NEXT_LABEL[i]||'';
-  document.getElementById('hup').textContent= i>1 ? '↓ свайп вниз — выше' : '↓ свайп вниз — всплыть';
+  const last=i===SCENES.length-1; document.getElementById('hint').classList.toggle('go',last);
+  document.getElementById('hup').textContent= last ? 'журнал погружения · бронь' : i>1 ? '↓ свайп вниз — выше' : '↓ свайп вниз — всплыть';
   document.getElementById('next').classList.add('on');
   setTimeout(()=>state.mode==='down'&&state.cur===i&&document.getElementById('hint').classList.add('on'),900);
 }
@@ -371,9 +469,63 @@ app.addEventListener('pointerup',e=>{ if(sy===null||state.mode!=='down') return;
   const deeper = dy<-60 || Math.abs(dy)<14;          // swipe up OR a simple tap = go deeper
   if(dy>60){ if(state.cur>1) move(state.cur-1); else surface(); }
   else if(deeper && SCENES[state.cur+1]) move(state.cur+1);
+  else if(deeper && state.cur===SCENES.length-1) ascend();
   else if(deeper){ const hn=document.getElementById('hint'); haptic('light'); hn.animate([{transform:'translate(-50%,0)'},{transform:'translate(-50%,10px)'},{transform:'translate(-50%,0)'}],{duration:400}); }
 },true);
 app.addEventListener('pointerdown',e=>{ if(e.target.closest('button')) return; dive(e.clientX,e.clientY); });
+
+
+/* ---------- ascent + finale (dive log, demo booking) ---------- */
+const STOPW={title:'СТОП · 5 М',sub:'страховочная остановка',kind:'info'};
+const fin=document.getElementById('fin');
+const PROGS=[['Пробный дайв','до 5 м · 1 день','$ 70'],['Open Water','до 18 м · 3–4 дня','$ 390'],['Advanced','до 30 м · 2 дня','$ 320'],['Deep Diver','до 40 м · 2 дня','$ 260']];
+const bk={prog:0,day:0,ppl:1};
+function ascend(){
+  state.mode='ascent'; state.ascAt=performance.now(); state.ascAir=state.air; state.diveEnd=0; hideUI(); haptic('medium');
+}
+function finale(){
+  state.mode='finale'; state.diveEnd=performance.now(); state.stopOn=false; haptic('heavy');
+  const sec=Math.max(0,Math.floor((state.diveEnd-state.diveStart)/1000));
+  document.getElementById('ftime').textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
+  document.getElementById('fair').innerHTML=Math.round(200-state.air)+'<small>bar</small>';
+  document.getElementById('fseen').innerHTML=SCENES.filter(x=>x.seen).map(x=>'<span>'+x.seen+'</span>').join('');
+  let n=1; try{ n=(parseInt(localStorage.getItem('pg_dives'))||0)+1; localStorage.setItem('pg_dives',n); }catch(e){}
+  document.getElementById('flog').textContent='№ '+String(n).padStart(3,'0');
+  fin.classList.remove('sent'); fin.querySelector('.sc').scrollTop=0; buildBooking();
+  body.classList.add('fin'); SCENES.forEach(x=>x.v!==vid&&x.v.pause());
+}
+function buildBooking(){
+  document.getElementById('fprogs').innerHTML=PROGS.map((p,i)=>`<button type="button" class="pg${i===bk.prog?' on':''}" data-i="${i}"><b>${p[0]}</b><i>${p[1]}</i><em>${p[2]}</em></button>`).join('');
+  const wd=['вс','пн','вт','ср','чт','пт','сб'], d0=new Date(); let h='';
+  for(let i=1;i<=14;i++){ const d=new Date(d0.getFullYear(),d0.getMonth(),d0.getDate()+i); h+=`<button type="button" class="day${i-1===bk.day?' on':''}" data-i="${i-1}" data-d="${d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})}"><i>${wd[d.getDay()]}</i><b>${d.getDate()}</b></button>`; }
+  document.getElementById('fdays').innerHTML=h;
+  document.getElementById('fppl').textContent=bk.ppl;
+  const c=document.getElementById('fcontact');
+  if(!c.value){ try{ const u=tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user; if(u&&u.username) c.value='@'+u.username; }catch(e){} }
+}
+fin.addEventListener('click',e=>{
+  const pg=e.target.closest('.pg'), dy=e.target.closest('.day');
+  if(pg){ bk.prog=+pg.dataset.i; fin.querySelectorAll('.pg').forEach(b=>b.classList.toggle('on',b===pg)); haptic('light'); }
+  if(dy){ bk.day=+dy.dataset.i; fin.querySelectorAll('.day').forEach(b=>b.classList.toggle('on',b===dy)); haptic('light'); }
+});
+document.getElementById('fminus').onclick=()=>{ bk.ppl=Math.max(1,bk.ppl-1); document.getElementById('fppl').textContent=bk.ppl; haptic('light'); };
+document.getElementById('fplus').onclick=()=>{ bk.ppl=Math.min(8,bk.ppl+1); document.getElementById('fppl').textContent=bk.ppl; haptic('light'); };
+document.getElementById('fsend').onclick=()=>{
+  const c=document.getElementById('fcontact');
+  if(!c.value.trim()){ c.focus(); c.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300}); haptic('light'); return; }
+  c.blur();
+  const day=fin.querySelector('.day.on'), ppl=bk.ppl+' '+(bk.ppl===1?'человек':bk.ppl<5?'человека':'человек');
+  document.getElementById('fsum').innerHTML=PROGS[bk.prog][0]+' · '+(day?day.dataset.d:'')+'<br>'+ppl+' · '+c.value.trim().replace(/[<>&]/g,'');
+  fin.classList.add('sent');
+  try{ tg&&tg.HapticFeedback&&tg.HapticFeedback.notificationOccurred('success'); }catch(e){} try{ navigator.vibrate&&navigator.vibrate([30,60,30]); }catch(e){}
+};
+document.getElementById('fagain').onclick=()=>{
+  body.classList.remove('fin','diving'); haptic('medium');
+  state.mode='surface'; state.tapAt=0; state.sub=0; state.mx=0; state.dk=0; state.cur=0; slotA=vid; slotB=vid2;
+  lastMeter=0; setDepth(0); setAir(200); tv.textContent='0:00'; vid.play().catch(()=>{});
+};
+fin.addEventListener('pointerdown',e=>e.stopPropagation());
+fin.addEventListener('pointerup',e=>e.stopPropagation());
 
 const ease=t=>t<0?0:t>1?1:t*t*(3-2*t);
 function tick(now){
@@ -394,13 +546,21 @@ function tick(now){
     setAir(m.air-ease(P)*(b>a?3:1));
     if(P<.55&&Math.random()<.35) spawn(1,W*(.3+Math.random()*.4),H*.85,40);
     if(P>=1){ state.mode='down'; state.cur=m.to; state.dk=0; state.mx=0; slotA=slotB; SCENES.forEach(s=>{ if(s.v!==slotA&&s.v!==vid) s.v.pause(); if(s.hold) s.hold.pause(); }); showUI(m.to); }
+  } else if(state.mode==='ascent'){
+    const A=(now-state.ascAt)/1000;
+    let dd= A<2 ? 30-25*ease(A/2) : A<3.4 ? 5 : 5*(1-ease((A-3.4)/1.2));
+    setDepth(Math.max(0,dd)); const mtr=Math.floor(dd); if(mtr!==lastMeter){ lastMeter=mtr; if(mtr%3===0) haptic('light'); }
+    setAir(state.ascAir-ease(A/4.6)*2);
+    state.stopOn = A>2.1 && A<3.4;
+    if(Math.random()<(A<2?.7:A<3.4?.25:.9)) spawn(A<2||A>3.4?2:1,Math.random()*W,H*1.02,30);
+    if(A>4.6){ finale(); }
   } else if(state.mode==='rising'){
     const R=(now-state.riseAt)/1000, k=1-ease(R/1.4);
     state.sub=Math.min(state.sub,k); state.mx=Math.min(state.mx,1-ease(R/.8)); setDepth(Math.min(parseFloat(dv.textContent),state.riseFrom*k));
     if(R<.9&&Math.random()<.5) spawn(2,Math.random()*W,H,30);
     if(R>1.5){ state.mode='surface'; state.tapAt=0; state.sub=0; state.mx=0; state.cur=0; slotA=vid; slotB=vid2; vid2.pause(); vid3.pause(); vid4.pause(); vid5.pause(); lastMeter=0; setDepth(0); setAir(200); tv.textContent='0:00'; body.classList.remove('diving'); }
   }
-  if(state.mode!=='surface') { const s=Math.max(0,Math.floor((now-state.diveStart)/1000)); tv.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  if(state.mode!=='surface'&&state.mode!=='finale') { const s=Math.max(0,Math.floor((now-state.diveStart)/1000)); tv.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
   if(!glOK){ vid2.style.opacity=vid3.style.opacity=vid4.style.opacity=vid5.style.opacity=.01; if(slotA!==vid) slotA.style.opacity=1; if(slotB!==vid) slotB.style.opacity=Math.max(state.mx,slotB===slotA?1:.01); }
   const live = state.mode==='move' ? (state.mv.started?slotB:null) : (state.mode==='down'||state.mode==='diving') ? (state.mode==='diving'?slotB:slotA) : null;
   // one-shot scene (manta): play the clip once, UI stays hidden; at the end switch to a seamless hover loop and bring the UI back
@@ -411,11 +571,12 @@ function tick(now){
   if(live&&live.paused&&!live.ended&&now-(state.kick||0)>500){ state.kick=now; live.play().catch(()=>{}); }
   // "hands off" warning on the turtle scene, synced to the hand in the video
   const sc=SCENES[state.cur], w=document.getElementById('warn');
-  const on= state.mode==='down' && sc.warn && sc.v.currentTime>sc.warn.t[0] && sc.v.currentTime<sc.warn.t[1];
+  const wv= state.mode==='ascent' ? (state.stopOn?STOPW:null) : (state.mode==='down' && sc.warn && sc.v.currentTime>sc.warn.t[0] && sc.v.currentTime<sc.warn.t[1]) ? sc.warn : null;
+  const on=!!wv;
   if(on && !w.classList.contains('on')){
-    document.getElementById('wt').textContent=sc.warn.title; document.getElementById('ws').textContent=sc.warn.sub;
-    w.classList.toggle('info',sc.warn.kind==='info'); w.classList.add('on');
-    if(sc.warn.kind==='warn'){ try{ tg&&tg.HapticFeedback&&tg.HapticFeedback.notificationOccurred('warning'); }catch(e){} try{ navigator.vibrate&&navigator.vibrate([50,70,50]); }catch(e){} }
+    document.getElementById('wt').textContent=wv.title; document.getElementById('ws').textContent=wv.sub;
+    w.classList.toggle('info',wv.kind==='info'); w.classList.add('on');
+    if(wv.kind==='warn'){ try{ tg&&tg.HapticFeedback&&tg.HapticFeedback.notificationOccurred('warning'); }catch(e){} try{ navigator.vibrate&&navigator.vibrate([50,70,50]); }catch(e){} }
     else haptic('light');
   }
   else if(!on && w.classList.contains('on')) w.classList.remove('on');
@@ -453,7 +614,7 @@ vid.play().catch(()=>{ app.addEventListener('pointerdown',()=>vid.play(),{once:t
 requestAnimationFrame(tick);
 
 /* ---------- auto-update: check version.txt every minute, reload only on the surface ---------- */
-const BUILD='20261029-1900';
+const BUILD='20261029-1910';
 let pendingVer=null;
 async function checkVer(){
   try{
