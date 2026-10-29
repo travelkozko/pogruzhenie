@@ -67,7 +67,7 @@ html,body{height:100%;background:var(--deep);overflow:hidden;color:var(--ink);fo
 #demo{position:absolute;left:0;right:0;bottom:calc(var(--bot) + 6px);text-align:center;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(234,252,255,.4);pointer-events:none}
 
 /* after dive placeholder */
-#vid2{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.02)}
+#vid2{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.01;transform:scale(1.02)}
 #next{position:absolute;left:calc(var(--gx) + 112px);right:calc(var(--gx) + 104px);top:calc(var(--gy) + 16px);text-align:center;opacity:0;pointer-events:none;
   padding:9px 10px 10px;border-radius:14px;background:rgba(3,28,52,.30);border:1px solid rgba(143,244,255,.20);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   transform:translateY(-8px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1)}
@@ -255,7 +255,7 @@ function drawGL(now){
     if(state.mx>0&&vid2.readyState>=2){ gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,tex2); gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,vid2); }
   }
   catch(e){ gl=null; glc.style.display='none'; return; }   // e.g. file:// security
-  if(!glOK){ glOK=true; glc.style.display='block'; }
+  if(!glOK){ glOK=true; glc.style.display='block'; vid2.style.opacity='1'; } // canvas covers it; visible video keeps Android decoding
   gl.viewport(0,0,glc.width,glc.height);
   gl.uniform2f(U.res,W,H); gl.uniform2f(U.vr,vid.videoWidth,vid.videoHeight); gl.uniform2f(U.vr2,vid2.videoWidth||1080,vid2.videoHeight||1920); gl.uniform1f(U.mx,state.mx);
   gl.uniform1f(U.tm,now/1000); gl.uniform1f(U.sub,state.sub);
@@ -315,7 +315,9 @@ function tick(now){
     if(R<.9&&Math.random()<.5) spawn(2,Math.random()*W,H,30);
     if(R>1.5){ state.mode='surface'; state.tapAt=0; state.sub=0; state.mx=0; vid2.pause(); lastMeter=0; setDepth(0); setAir(200); tv.textContent='0:00'; body.classList.remove('diving'); }
   }
-  if(!glOK) vid2.style.opacity=state.mx;
+  if(!glOK) vid2.style.opacity=Math.max(state.mx,.01);
+  if(state.mode!=='surface'&&state.mode!=='rising'&&vid2.paused&&now-(state.kick||0)>500){ state.kick=now; vid2.play().catch(()=>{}); }
+  if(state.mode==='surface'&&vid.paused&&now-(state.kick||0)>1000){ state.kick=now; vid.play().catch(()=>{}); }
   drawFX(T);
   drawGL(now);
   requestAnimationFrame(tick);
