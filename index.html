@@ -70,7 +70,7 @@ html,body{height:100%;background:var(--deep);overflow:hidden;color:var(--ink);fo
 #demo{position:absolute;left:0;right:0;bottom:calc(var(--bot) + 6px);text-align:center;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(234,252,255,.4);pointer-events:none}
 
 /* after dive placeholder */
-#vid2,#vid3,#vid4{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.01;transform:scale(1.03)}
+#vid2,#vid3,#vid4,#vid5{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.01;transform:scale(1.03)}
 #next{position:absolute;left:calc(var(--gx) + 112px);right:calc(var(--gx) + 104px);top:calc(var(--gy) + 16px);text-align:center;opacity:0;pointer-events:none;
   padding:9px 10px 10px;border-radius:14px;background:rgba(3,28,52,.30);border:1px solid rgba(143,244,255,.20);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   transform:translateY(-8px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1)}
@@ -99,6 +99,7 @@ body.diving #cta{opacity:0}
   <video id="vid2" src="img/reef5.mp4" muted loop playsinline preload="auto"></video>
   <video id="vid3" src="img/turtle12.mp4" muted loop playsinline preload="auto"></video>
   <video id="vid4" src="img/manta18_loop.mp4" muted loop playsinline preload="auto"></video>
+  <video id="vid5" src="img/shark30.mp4" muted loop playsinline preload="auto"></video>
   <canvas id="gl"></canvas>
   <canvas id="fx"></canvas>
 
@@ -138,7 +139,7 @@ body.diving #cta{opacity:0}
 (()=>{
 const tg = window.Telegram && Telegram.WebApp;
 const root = document.documentElement, body = document.body;
-const app = document.getElementById('app'), vid = document.getElementById('vid'), vid2 = document.getElementById('vid2'), vid3 = document.getElementById('vid3'), vid4 = document.getElementById('vid4');
+const app = document.getElementById('app'), vid = document.getElementById('vid'), vid2 = document.getElementById('vid2'), vid3 = document.getElementById('vid3'), vid4 = document.getElementById('vid4'), vid5 = document.getElementById('vid5');
 const glc = document.getElementById('gl'), fx = document.getElementById('fx'), ctx = fx.getContext('2d');
 const maskSvg = document.getElementById('mask');
 let W=0,H=0,DPR=1;
@@ -300,7 +301,7 @@ function drawGL(now){
     if(state.mx>0&&slotB.readyState>=2){ gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,tex2); gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,slotB); }
   }
   catch(e){ gl=null; glc.style.display='none'; return; }   // e.g. file:// security
-  if(!glOK){ glOK=true; glc.style.display='block'; vid2.style.opacity='1'; vid3.style.opacity='1'; vid4.style.opacity='1'; } // canvas covers it; visible video keeps Android decoding
+  if(!glOK){ glOK=true; glc.style.display='block'; vid2.style.opacity='1'; vid3.style.opacity='1'; vid4.style.opacity='1'; vid5.style.opacity='1'; } // canvas covers it; visible video keeps Android decoding
   gl.viewport(0,0,glc.width,glc.height);
   gl.uniform2f(U.res,W,H); gl.uniform2f(U.vr,slotA.videoWidth||1080,slotA.videoHeight||1920); gl.uniform2f(U.vr2,slotB.videoWidth||1080,slotB.videoHeight||1920); gl.uniform1f(U.mx,state.mx); gl.uniform1f(U.dk,state.dk); gl.uniform1f(U.camA,camoAmt(slotA)); gl.uniform1f(U.camB,camoAmt(slotB));
   gl.uniform1f(U.tm,now/1000); gl.uniform1f(U.sub,state.sub);
@@ -314,8 +315,9 @@ const SCENES=[
   {v:vid2, depth:5,  tag:'Пробный дайв', txt:'Мир становится тише, а&nbsp;краски — ярче'},
   {v:vid3, depth:12, tag:'Open Water',   txt:'Синева густеет. Ты — гость рифа', warn:{t:[2.15,4.7],title:'РУКАМИ НЕ ТРОГАТЬ',sub:'смотри — но не касайся',kind:'warn'}},
   {v:vid4, depth:18, tag:'Advanced', txt:'Размах до семи метров — и&nbsp;ни капли угрозы'},
+  {v:vid5, depth:30, tag:'Deep Diver', txt:'Самая большая рыба на&nbsp;планете — и&nbsp;ест только планктон'},
 ];
-const NEXT_LABEL={1:'КОСНИСЬ — ГЛУБЖЕ · 12 М',2:'КОСНИСЬ — ГЛУБЖЕ · 18 М',3:'30 М · СКОРО'};
+const NEXT_LABEL={1:'КОСНИСЬ — ГЛУБЖЕ · 12 М',2:'КОСНИСЬ — ГЛУБЖЕ · 18 М',3:'КОСНИСЬ — ГЛУБЖЕ · 30 М',4:'ЖУРНАЛ ПОГРУЖЕНИЙ · СКОРО'};
 // octopus turns sand-coloured (code-driven camouflage), resets before the loop seam
 function camoAmt(v){ const s=SCENES.find(x=>x.v===v); return (s&&s.camo) ? (v.currentTime||0) : -1; }
 let slotA=vid, slotB=vid2;
@@ -396,10 +398,10 @@ function tick(now){
     const R=(now-state.riseAt)/1000, k=1-ease(R/1.4);
     state.sub=Math.min(state.sub,k); state.mx=Math.min(state.mx,1-ease(R/.8)); setDepth(Math.min(parseFloat(dv.textContent),state.riseFrom*k));
     if(R<.9&&Math.random()<.5) spawn(2,Math.random()*W,H,30);
-    if(R>1.5){ state.mode='surface'; state.tapAt=0; state.sub=0; state.mx=0; state.cur=0; slotA=vid; slotB=vid2; vid2.pause(); vid3.pause(); vid4.pause(); lastMeter=0; setDepth(0); setAir(200); tv.textContent='0:00'; body.classList.remove('diving'); }
+    if(R>1.5){ state.mode='surface'; state.tapAt=0; state.sub=0; state.mx=0; state.cur=0; slotA=vid; slotB=vid2; vid2.pause(); vid3.pause(); vid4.pause(); vid5.pause(); lastMeter=0; setDepth(0); setAir(200); tv.textContent='0:00'; body.classList.remove('diving'); }
   }
   if(state.mode!=='surface') { const s=Math.max(0,Math.floor((now-state.diveStart)/1000)); tv.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
-  if(!glOK){ vid2.style.opacity=vid3.style.opacity=vid4.style.opacity=.01; if(slotA!==vid) slotA.style.opacity=1; if(slotB!==vid) slotB.style.opacity=Math.max(state.mx,slotB===slotA?1:.01); }
+  if(!glOK){ vid2.style.opacity=vid3.style.opacity=vid4.style.opacity=vid5.style.opacity=.01; if(slotA!==vid) slotA.style.opacity=1; if(slotB!==vid) slotB.style.opacity=Math.max(state.mx,slotB===slotA?1:.01); }
   const live = state.mode==='move' ? (state.mv.started?slotB:null) : (state.mode==='down'||state.mode==='diving') ? (state.mode==='diving'?slotB:slotA) : null;
   // one-shot scene (manta): play the clip once, UI stays hidden; at the end switch to a seamless hover loop and bring the UI back
   const cs=SCENES[state.cur];
@@ -451,7 +453,7 @@ vid.play().catch(()=>{ app.addEventListener('pointerdown',()=>vid.play(),{once:t
 requestAnimationFrame(tick);
 
 /* ---------- auto-update: check version.txt every minute, reload only on the surface ---------- */
-const BUILD='20261029-1820';
+const BUILD='20261029-1900';
 let pendingVer=null;
 async function checkVer(){
   try{
