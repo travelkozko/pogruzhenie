@@ -158,11 +158,11 @@ body.fin #fin .card.c1{transition-delay:.7s} body.fin #fin .card.c2{transition-d
   <canvas id="fx"></canvas>
 
   <div id="title">
-    <h1>ПОГРУЖЕНИЕ</h1>
-    <p>дайв-центр</p>
+    <h1 data-t="h1">ПОГРУЖЕНИЕ</h1>
+    <p data-t="sub">дайв-центр</p>
     <div class="line"></div>
   </div>
-  <div id="cta"><div class="ring"><i></i></div><span>Коснись, чтобы нырнуть</span></div>
+  <div id="cta"><div class="ring"><i></i></div><span data-t="cta">Коснись, чтобы нырнуть</span></div>
 
   <div id="next">
     <div class="d" id="ptag">Пробный дайв</div>
@@ -174,60 +174,60 @@ body.fin #fin .card.c1{transition-delay:.7s} body.fin #fin .card.c2{transition-d
   <div id="shade"></div>
   <svg id="mask"></svg>
 
-  <div class="hud" id="depth"><div class="v"><span id="dv">0.0</span><small>м</small></div><div class="lbl">глубина</div></div>
+  <div class="hud" id="depth"><div class="v"><span id="dv">0.0</span><small data-t="m">м</small></div><div class="lbl" data-t="depth">глубина</div></div>
   <div class="hud" id="air">
     <svg viewBox="0 0 78 78"><circle cx="39" cy="39" r="34" fill="none" stroke="rgba(143,244,255,.15)" stroke-width="2"/>
       <circle id="arc" cx="39" cy="39" r="34" fill="none" stroke="#8ff4ff" stroke-width="2" stroke-linecap="round" transform="rotate(-90 39 39)" stroke-dasharray="213.6" stroke-dashoffset="0"/></svg>
     <div class="num"><b id="av">200</b><i>BAR</i></div>
-    <div class="lbl">воздух</div>
+    <div class="lbl" data-t="air">воздух</div>
   </div>
   <div id="scale"><div class="rail"></div></div>
   <div class="hud" id="stats">
-    <div><div class="v">27°C</div><div class="lbl">вода</div></div>
-    <div class="r"><div class="v" id="tv">0:00</div><div class="lbl">время</div></div>
+    <div><div class="v">27°C</div><div class="lbl" data-t="water">вода</div></div>
+    <div class="r"><div class="v" id="tv">0:00</div><div class="lbl" data-t="time">время</div></div>
   </div>
-  <div id="demo">демо · Kozak Studio</div>
+  <div id="demo" data-t="demo">демо · Kozak Studio</div>
 
   <div id="fin">
     <div class="bg"></div>
     <div class="sc">
       <div class="card c1">
-        <div class="hd"><span class="k">журнал погружения</span><span class="k" id="flog">№ 001</span></div>
-        <h2>С возвращением на&nbsp;поверхность</h2>
+        <div class="hd"><span class="k" data-t="log">журнал погружения</span><span class="k" id="flog">№ 001</span></div>
+        <h2 data-t="welcome">С возвращением на&nbsp;поверхность</h2>
         <div class="grid">
-          <div class="st"><b>30.0<small>м</small></b><span class="k">макс. глубина</span></div>
-          <div class="st"><b id="ftime">0:00</b><span class="k">под водой</span></div>
-          <div class="st"><b id="fair">0<small>bar</small></b><span class="k">ушло воздуха</span></div>
-          <div class="st"><b>27<small>°C</small></b><span class="k">вода</span></div>
+          <div class="st"><b>30.0<small data-t="m">м</small></b><span class="k" data-t="maxdepth">макс. глубина</span></div>
+          <div class="st"><b id="ftime">0:00</b><span class="k" data-t="under">под водой</span></div>
+          <div class="st"><b id="fair">0<small>bar</small></b><span class="k" data-t="airused">ушло воздуха</span></div>
+          <div class="st"><b>27<small>°C</small></b><span class="k" data-t="water">вода</span></div>
         </div>
-        <div class="lbl2 k">кого видели</div>
+        <div class="lbl2 k" data-t="saw">кого видели</div>
         <div class="seen" id="fseen"></div>
       </div>
       <div class="card c2">
         <div class="form">
-          <span class="k">бронь</span>
-          <h2>Повторим — уже по-настоящему?</h2>
-          <div class="k lbl2" style="margin-top:0">программа · цены демо</div>
+          <span class="k" data-t="booking">бронь</span>
+          <h2 data-t="again_q">Повторим — уже по-настоящему?</h2>
+          <div class="k lbl2" style="margin-top:0" data-t="prog">программа · цены демо</div>
           <div class="progs" id="fprogs"></div>
-          <div class="k lbl2">дата</div>
+          <div class="k lbl2" data-t="date">дата</div>
           <div class="days" id="fdays"></div>
-          <div class="k lbl2">сколько человек и как связаться</div>
+          <div class="k lbl2" data-t="people">сколько человек и как связаться</div>
           <div class="row">
             <div class="step"><button type="button" id="fminus">−</button><span id="fppl">1</span><button type="button" id="fplus">+</button></div>
             <input id="fcontact" type="text" placeholder="@yournick" autocomplete="off">
           </div>
-          <button type="button" class="send" id="fsend">Отправить заявку</button>
-          <div class="note">Это демо: заявка никуда не отправляется</div>
+          <button type="button" class="send" id="fsend" data-t="send">Отправить заявку</button>
+          <div class="note" data-t="note">Это демо: заявка никуда не отправляется</div>
         </div>
         <div class="done">
           <div class="ok">✓</div>
-          <p>Заявка принята.<br>Инструктор свяжется с&nbsp;тобой.</p>
+          <p data-t="done">Заявка принята.<br>Инструктор свяжется с&nbsp;тобой.</p>
           <div class="sum" id="fsum"></div>
-          <div class="dm">Это демо — заявка никуда не&nbsp;отправлена</div>
+          <div class="dm" data-t="dm">Это демо — заявка никуда не&nbsp;отправлена</div>
         </div>
       </div>
-      <button type="button" class="again" id="fagain">↓ НЫРНУТЬ ЕЩЁ РАЗ</button>
-      <div class="foot">демо · Kozak Studio</div>
+      <button type="button" class="again" id="fagain" data-t="dive_again">↓ НЫРНУТЬ ЕЩЁ РАЗ</button>
+      <div class="foot" data-t="demo">демо · Kozak Studio</div>
     </div>
   </div>
 </div>
@@ -235,6 +235,21 @@ body.fin #fin .card.c1{transition-delay:.7s} body.fin #fin .card.c2{transition-d
 <script>
 (()=>{
 const tg = window.Telegram && Telegram.WebApp;
+/* ---------- язык: ?lang= из витрины, иначе язык телефона ---------- */
+const LANG=(()=>{ try{ const q=new URLSearchParams(location.search).get('lang'); if(q==='ru'||q==='en') return q; }catch(e){}
+  return /^(ru|uk|be|kk)\b/i.test(navigator.language||'')?'ru':'en'; })();
+const EN=LANG==='en', L=(ru,en)=>EN?en:ru;
+const TX={h1:'DEEP DIVE',sub:'dive center',cta:'Tap to dive',m:'m',depth:'depth',air:'air',water:'water',time:'time',
+  demo:'demo · Kozak Studio',log:'dive log',welcome:'Welcome back to&nbsp;the surface',maxdepth:'max depth',under:'underwater',
+  airused:'air used',saw:'what you saw',booking:'booking',again_q:'Ready for the real thing?',prog:'program · demo prices',
+  date:'date',people:'how many people &amp; how to reach you',send:'Send request',note:'This is a demo: the request isn’t sent anywhere',
+  done:'Request received.<br>An instructor will contact&nbsp;you.',dm:'This is a demo: nothing was&nbsp;sent',dive_again:'↓ DIVE AGAIN'};
+if(EN){ document.documentElement.lang='en'; document.title='Deep Dive';
+  document.querySelectorAll('[data-t]').forEach(e=>{ const t=TX[e.dataset.t]; if(t) e.innerHTML=t; });
+  const pt=document.getElementById('ptag'),px=document.getElementById('ptxt'),hn=document.getElementById('hnext'),hu=document.getElementById('hup'),wt=document.getElementById('wt'),ws=document.getElementById('ws');
+  if(pt)pt.textContent='Try dive'; if(px)px.innerHTML='The world gets quieter and the&nbsp;colors brighter';
+  if(hn)hn.textContent='TAP — DEEPER · 12 M'; if(hu)hu.textContent='↓ swipe down to surface';
+  if(wt)wt.textContent='HANDS OFF'; if(ws)ws.textContent='look, but don’t touch'; }
 const root = document.documentElement, body = document.body;
 const app = document.getElementById('app'), vid = document.getElementById('vid'), vid2 = document.getElementById('vid2'), vid3 = document.getElementById('vid3'), vid4 = document.getElementById('vid4'), vid5 = document.getElementById('vid5');
 const glc = document.getElementById('gl'), fx = document.getElementById('fx'), ctx = fx.getContext('2d');
@@ -409,12 +424,12 @@ function drawGL(now){
 /* ---------- state & dive ---------- */
 const SCENES=[
   {v:vid, depth:0},
-  {v:vid2, depth:5, seen:'Коралловый риф', tag:'Пробный дайв', txt:'Мир становится тише, а&nbsp;краски — ярче'},
-  {v:vid3, depth:12, seen:'Черепаха', tag:'Open Water',   txt:'Синева густеет. Ты — гость рифа', warn:{t:[2.15,4.7],title:'РУКАМИ НЕ ТРОГАТЬ',sub:'смотри — но не касайся',kind:'warn'}},
-  {v:vid4, depth:18, seen:'Манта', tag:'Advanced', txt:'Размах до семи метров — и&nbsp;ни капли угрозы'},
-  {v:vid5, depth:30, seen:'Китовая акула', tag:'Deep Diver', txt:'Самая большая рыба на&nbsp;планете — и&nbsp;ест только планктон'},
+  {v:vid2, depth:5, seen:L('Коралловый риф','Coral reef'), tag:L('Пробный дайв','Try dive'), txt:L('Мир становится тише, а&nbsp;краски — ярче','The world gets quieter and the&nbsp;colors brighter')},
+  {v:vid3, depth:12, seen:L('Черепаха','Sea turtle'), tag:'Open Water',   txt:L('Синева густеет. Ты — гость рифа','The blue deepens. You’re a guest of the&nbsp;reef'), warn:{t:[2.15,4.7],title:L('РУКАМИ НЕ ТРОГАТЬ','HANDS OFF'),sub:L('смотри — но не касайся','look, but don’t touch'),kind:'warn'}},
+  {v:vid4, depth:18, seen:L('Манта','Manta ray'), tag:'Advanced', txt:L('Размах до семи метров — и&nbsp;ни капли угрозы','Up to seven meters wide and&nbsp;completely harmless')},
+  {v:vid5, depth:30, seen:L('Китовая акула','Whale shark'), tag:'Deep Diver', txt:L('Самая большая рыба на&nbsp;планете — и&nbsp;ест только планктон','The biggest fish on&nbsp;the planet, and it only eats&nbsp;plankton')},
 ];
-const NEXT_LABEL={1:'КОСНИСЬ — ГЛУБЖЕ · 12 М',2:'КОСНИСЬ — ГЛУБЖЕ · 18 М',3:'КОСНИСЬ — ГЛУБЖЕ · 30 М',4:'КОСНИСЬ — ВСПЛЫВАЕМ ↑'};
+const NEXT_LABEL=EN?{1:'TAP — DEEPER · 12 M',2:'TAP — DEEPER · 18 M',3:'TAP — DEEPER · 30 M',4:'TAP — ASCEND ↑'}:{1:'КОСНИСЬ — ГЛУБЖЕ · 12 М',2:'КОСНИСЬ — ГЛУБЖЕ · 18 М',3:'КОСНИСЬ — ГЛУБЖЕ · 30 М',4:'КОСНИСЬ — ВСПЛЫВАЕМ ↑'};
 // octopus turns sand-coloured (code-driven camouflage), resets before the loop seam
 function camoAmt(v){ const s=SCENES.find(x=>x.v===v); return (s&&s.camo) ? (v.currentTime||0) : -1; }
 let slotA=vid, slotB=vid2;
@@ -454,7 +469,7 @@ function showUI(i){
   const s=SCENES[i]; document.getElementById('ptag').innerHTML=s.tag; document.getElementById('ptxt').innerHTML=s.txt;
   document.getElementById('hnext').textContent=NEXT_LABEL[i]||'';
   const last=i===SCENES.length-1; document.getElementById('hint').classList.toggle('go',last);
-  document.getElementById('hup').textContent= last ? 'журнал погружения · бронь' : i>1 ? '↓ свайп вниз — выше' : '↓ свайп вниз — всплыть';
+  document.getElementById('hup').textContent= last ? L('журнал погружения · бронь','dive log · booking') : i>1 ? L('↓ свайп вниз — выше','↓ swipe down to go up') : L('↓ свайп вниз — всплыть','↓ swipe down to surface');
   document.getElementById('next').classList.add('on');
   setTimeout(()=>state.mode==='down'&&state.cur===i&&document.getElementById('hint').classList.add('on'),900);
 }
@@ -476,9 +491,9 @@ app.addEventListener('pointerdown',e=>{ if(e.target.closest('button')) return; d
 
 
 /* ---------- ascent + finale (dive log, demo booking) ---------- */
-const STOPW={title:'СТОП · 5 М',sub:'страховочная остановка',kind:'info'};
+const STOPW={title:L('СТОП · 5 М','STOP · 5 M'),sub:L('страховочная остановка','safety stop'),kind:'info'};
 const fin=document.getElementById('fin');
-const PROGS=[['Пробный дайв','до 5 м · 1 день','$ 70'],['Open Water','до 18 м · 3–4 дня','$ 390'],['Advanced','до 30 м · 2 дня','$ 320'],['Deep Diver','до 40 м · 2 дня','$ 260']];
+const PROGS=EN?[['Try dive','up to 5 m · 1 day','$ 70'],['Open Water','up to 18 m · 3–4 days','$ 390'],['Advanced','up to 30 m · 2 days','$ 320'],['Deep Diver','up to 40 m · 2 days','$ 260']]:[['Пробный дайв','до 5 м · 1 день','$ 70'],['Open Water','до 18 м · 3–4 дня','$ 390'],['Advanced','до 30 м · 2 дня','$ 320'],['Deep Diver','до 40 м · 2 дня','$ 260']];
 const bk={prog:0,day:0,ppl:1};
 function ascend(){
   state.mode='ascent'; state.ascAt=performance.now(); state.ascAir=state.air; state.diveEnd=0; hideUI(); haptic('medium');
@@ -490,14 +505,14 @@ function finale(){
   document.getElementById('fair').innerHTML=Math.round(200-state.air)+'<small>bar</small>';
   document.getElementById('fseen').innerHTML=SCENES.filter(x=>x.seen).map(x=>'<span>'+x.seen+'</span>').join('');
   let n=1; try{ n=(parseInt(localStorage.getItem('pg_dives'))||0)+1; localStorage.setItem('pg_dives',n); }catch(e){}
-  document.getElementById('flog').textContent='№ '+String(n).padStart(3,'0');
+  document.getElementById('flog').textContent=(EN?'No. ':'№ ')+String(n).padStart(3,'0');
   fin.classList.remove('sent'); fin.querySelector('.sc').scrollTop=0; buildBooking();
   body.classList.add('fin'); SCENES.forEach(x=>x.v!==vid&&x.v.pause());
 }
 function buildBooking(){
   document.getElementById('fprogs').innerHTML=PROGS.map((p,i)=>`<button type="button" class="pg${i===bk.prog?' on':''}" data-i="${i}"><b>${p[0]}</b><i>${p[1]}</i><em>${p[2]}</em></button>`).join('');
-  const wd=['вс','пн','вт','ср','чт','пт','сб'], d0=new Date(); let h='';
-  for(let i=1;i<=14;i++){ const d=new Date(d0.getFullYear(),d0.getMonth(),d0.getDate()+i); h+=`<button type="button" class="day${i-1===bk.day?' on':''}" data-i="${i-1}" data-d="${d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})}"><i>${wd[d.getDay()]}</i><b>${d.getDate()}</b></button>`; }
+  const wd=EN?['Sun','Mon','Tue','Wed','Thu','Fri','Sat']:['вс','пн','вт','ср','чт','пт','сб'], d0=new Date(); let h='';
+  for(let i=1;i<=14;i++){ const d=new Date(d0.getFullYear(),d0.getMonth(),d0.getDate()+i); h+=`<button type="button" class="day${i-1===bk.day?' on':''}" data-i="${i-1}" data-d="${d.toLocaleDateString(EN?'en-US':'ru-RU',{day:'numeric',month:'long'})}"><i>${wd[d.getDay()]}</i><b>${d.getDate()}</b></button>`; }
   document.getElementById('fdays').innerHTML=h;
   document.getElementById('fppl').textContent=bk.ppl;
 }
@@ -512,7 +527,7 @@ document.getElementById('fsend').onclick=()=>{
   const c=document.getElementById('fcontact');
   if(!c.value.trim()){ c.focus(); c.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300}); haptic('light'); return; }
   c.blur();
-  const day=fin.querySelector('.day.on'), ppl=bk.ppl+' '+(bk.ppl===1?'человек':bk.ppl<5?'человека':'человек');
+  const day=fin.querySelector('.day.on'), ppl=bk.ppl+' '+(EN?(bk.ppl===1?'person':'people'):(bk.ppl===1?'человек':bk.ppl<5?'человека':'человек'));
   document.getElementById('fsum').innerHTML=PROGS[bk.prog][0]+' · '+(day?day.dataset.d:'')+'<br>'+ppl+' · '+c.value.trim().replace(/[<>&]/g,'');
   fin.classList.add('sent');
   try{ tg&&tg.HapticFeedback&&tg.HapticFeedback.notificationOccurred('success'); }catch(e){} try{ navigator.vibrate&&navigator.vibrate([30,60,30]); }catch(e){}
