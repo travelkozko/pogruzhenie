@@ -183,7 +183,7 @@ body.fin #fin .card.c1{transition-delay:.7s} body.fin #fin .card.c2{transition-d
   </div>
   <div id="scale"><div class="rail"></div></div>
   <div class="hud" id="stats">
-    <div><div class="v">27°C</div><div class="lbl" data-t="water">вода</div></div>
+    <div><div class="v"><span id="wtv">28</span>°C</div><div class="lbl" data-t="water">вода</div></div>
     <div class="r"><div class="v" id="tv">0:00</div><div class="lbl" data-t="time">время</div></div>
   </div>
   <div id="demo" data-t="demo">демо · Kozak Studio</div>
@@ -198,7 +198,7 @@ body.fin #fin .card.c1{transition-delay:.7s} body.fin #fin .card.c2{transition-d
           <div class="st"><b>30.0<small data-t="m">м</small></b><span class="k" data-t="maxdepth">макс. глубина</span></div>
           <div class="st"><b id="ftime">0:00</b><span class="k" data-t="under">под водой</span></div>
           <div class="st"><b id="fair">0<small>bar</small></b><span class="k" data-t="airused">ушло воздуха</span></div>
-          <div class="st"><b>27<small>°C</small></b><span class="k" data-t="water">вода</span></div>
+          <div class="st"><b><span id="fwt">24</span><small>°C</small></b><span class="k" data-t="water">вода</span></div>
         </div>
         <div class="lbl2 k" data-t="saw">кого видели</div>
         <div class="seen" id="fseen"></div>
@@ -441,7 +441,10 @@ function fitPlate(){ // keep the top plate exactly between depth gauge and air r
   plateEl.style.left=L+'px'; plateEl.style.right=Rr+'px';
 }
 let dlen=0;
-function setDepth(d){ const s=d.toFixed(1); dv.textContent=s; if(s.length!==dlen){ dlen=s.length; fitPlate(); } if(markEl) markEl.style.top=(d/30*100)+'%'; }
+const WT=[[0,28],[5,28],[12,27],[18,26],[30,24]];
+function waterT(d){ for(let i=1;i<WT.length;i++){ if(d<=WT[i][0]){ const [d0,t0]=WT[i-1],[d1,t1]=WT[i]; return t0+(t1-t0)*(d-d0)/(d1-d0); } } return WT[WT.length-1][1]; }
+const wtv=document.getElementById('wtv'); let wtLast=null;
+function setDepth(d){ const s=d.toFixed(1); dv.textContent=s; const t=Math.round(waterT(d)); if(t!==wtLast&&wtv){ wtLast=t; wtv.textContent=t; } if(s.length!==dlen){ dlen=s.length; fitPlate(); } if(markEl) markEl.style.top=(d/30*100)+'%'; }
 function setAir(a){ state.air=a; av.textContent=Math.round(a); arc.setAttribute('stroke-dashoffset',(213.6*(1-a/200)).toFixed(1)); }
 let lastMeter=0;
 
