@@ -214,7 +214,7 @@ body.fin #fin .card.c1{transition-delay:.7s} body.fin #fin .card.c2{transition-d
           <div class="k lbl2">сколько человек и как связаться</div>
           <div class="row">
             <div class="step"><button type="button" id="fminus">−</button><span id="fppl">1</span><button type="button" id="fplus">+</button></div>
-            <input id="fcontact" type="text" placeholder="@telegram" autocomplete="off">
+            <input id="fcontact" type="text" placeholder="@yournick" autocomplete="off">
           </div>
           <button type="button" class="send" id="fsend">Отправить заявку</button>
           <div class="note">Это демо: заявка никуда не отправляется</div>
@@ -500,8 +500,6 @@ function buildBooking(){
   for(let i=1;i<=14;i++){ const d=new Date(d0.getFullYear(),d0.getMonth(),d0.getDate()+i); h+=`<button type="button" class="day${i-1===bk.day?' on':''}" data-i="${i-1}" data-d="${d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})}"><i>${wd[d.getDay()]}</i><b>${d.getDate()}</b></button>`; }
   document.getElementById('fdays').innerHTML=h;
   document.getElementById('fppl').textContent=bk.ppl;
-  const c=document.getElementById('fcontact');
-  if(!c.value){ try{ const u=tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user; if(u&&u.username) c.value='@'+u.username; }catch(e){} }
 }
 fin.addEventListener('click',e=>{
   const pg=e.target.closest('.pg'), dy=e.target.closest('.day');
