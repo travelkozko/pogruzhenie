@@ -406,15 +406,20 @@ function initGL(){
     tex=mk(0); tex2=mk(1); gl.uniform1i(U.t,0); gl.uniform1i(U.t2,1);
   }catch(e){ gl=null; console.warn('gl off',e); }
 }
+function glFail(){ gl=null; glOK=false; glc.style.display='none'; }
+/* Android может забрать видеокарту, пока приложение свёрнуто: ловим потерю и восстанавливаем «стекло» */
+glc.addEventListener('webglcontextlost',e=>{ e.preventDefault(); glFail(); },false);
+glc.addEventListener('webglcontextrestored',()=>{ initGL(); },false);
 function drawGL(now){
   if(!gl) return;
+  if(gl.isContextLost&&gl.isContextLost()){ glFail(); return; }
   if(slotA.readyState<2) return;
   try{
     if(state.mx<1){ gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,tex); gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,slotA); }
     if(state.mx>0&&slotB.readyState>=2){ gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,tex2); gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,slotB); }
   }
-  catch(e){ gl=null; glc.style.display='none'; return; }   // e.g. file:// security
-  if(!glOK){ glOK=true; glc.style.display='block'; vid2.style.opacity='1'; vid3.style.opacity='1'; vid4.style.opacity='1'; vid5.style.opacity='1'; } // canvas covers it; visible video keeps Android decoding
+  catch(e){ glFail(); return; }   // e.g. file:// security
+  if(!glOK){ glOK=true; glc.style.display='block'; } // canvas covers the videos; the playing ones stay visible underneath so Android keeps decoding
   gl.viewport(0,0,glc.width,glc.height);
   gl.uniform2f(U.res,W,H); gl.uniform2f(U.vr,slotA.videoWidth||1080,slotA.videoHeight||1920); gl.uniform2f(U.vr2,slotB.videoWidth||1080,slotB.videoHeight||1920); gl.uniform1f(U.mx,state.mx); gl.uniform1f(U.dk,state.dk); gl.uniform1f(U.camA,camoAmt(slotA)); gl.uniform1f(U.camB,camoAmt(slotB));
   gl.uniform1f(U.tm,now/1000); gl.uniform1f(U.sub,state.sub);
@@ -578,7 +583,8 @@ function tick(now){
     if(R>1.5){ state.mode='surface'; state.tapAt=0; state.sub=0; state.mx=0; state.cur=0; slotA=vid; slotB=vid2; vid2.pause(); vid3.pause(); vid4.pause(); vid5.pause(); lastMeter=0; setDepth(0); setAir(200); tv.textContent='0:00'; body.classList.remove('diving'); }
   }
   if(state.mode!=='surface'&&state.mode!=='finale') { const s=Math.max(0,Math.floor((now-state.diveStart)/1000)); tv.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
-  if(!glOK){ vid2.style.opacity=vid3.style.opacity=vid4.style.opacity=vid5.style.opacity=.01; if(slotA!==vid) slotA.style.opacity=1; if(slotB!==vid) slotB.style.opacity=Math.max(state.mx,slotB===slotA?1:.01); }
+  if(glOK){ [vid2,vid3,vid4,vid5].forEach(v=>{ const o=(v===slotA||v===slotB)?'1':'0.01'; if(v.style.opacity!==o) v.style.opacity=o; }); }
+  else { vid2.style.opacity=vid3.style.opacity=vid4.style.opacity=vid5.style.opacity=.01; if(slotA!==vid) slotA.style.opacity=1; if(slotB!==vid) slotB.style.opacity=Math.max(state.mx,slotB===slotA?1:.01); }
   const live = state.mode==='move' ? (state.mv.started?slotB:null) : (state.mode==='down'||state.mode==='diving') ? (state.mode==='diving'?slotB:slotA) : null;
   // one-shot scene (manta): play the clip once, UI stays hidden; at the end switch to a seamless hover loop and bring the UI back
   const cs=SCENES[state.cur];
@@ -626,12 +632,18 @@ function drawFX(T){
 }
 
 window.addEventListener('resize',layout);
+document.addEventListener('visibilitychange',()=>{ if(document.hidden) return;
+  state.kick=0;
+  if(gl&&gl.isContextLost&&gl.isContextLost()) glFail();
+  const v= state.mode==='surface'||state.mode==='finale' ? vid : slotA;
+  if(v&&v.paused) v.play().catch(()=>{});
+});
 layout(); initGL();
 vid.play().catch(()=>{ app.addEventListener('pointerdown',()=>vid.play(),{once:true}); });
 requestAnimationFrame(tick);
 
 /* ---------- auto-update: check version.txt every minute, reload only on the surface ---------- */
-const BUILD='20261029-1910';
+const BUILD='20261031-0835';
 let pendingVer=null;
 async function checkVer(){
   try{
