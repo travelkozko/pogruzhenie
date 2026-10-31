@@ -655,7 +655,9 @@ async function checkVer(){
 }
 function tryReload(){
   if(pendingVer && state.mode==='surface'){
-    location.replace(location.pathname+'?v='+encodeURIComponent(pendingVer)+location.hash); // hash keeps Telegram launch data
+    // сохраняем все параметры адреса (в том числе язык) и фиксируем текущий язык; hash хранит данные запуска Telegram
+    const q=new URLSearchParams(location.search); q.set('v',pendingVer); q.set('lang',LANG);
+    location.replace(location.pathname+'?'+q.toString()+location.hash);
   }
 }
 setTimeout(checkVer,2000); setInterval(checkVer,60000); setInterval(tryReload,1000);
